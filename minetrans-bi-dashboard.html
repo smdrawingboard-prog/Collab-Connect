@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineTrans BI Insurance & Commodity Assessment Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-[#0A0A0B] text-[#C9CACE] font-sans antialiased min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="border-b border-[#2A292E] bg-[#121114] px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-600 to-amber-700 flex items-center justify-center font-bold text-white shadow-lg">MT</div>
+            <div>
+                <h1 class="text-lg font-bold text-white tracking-wide">MineTrans BI Risk & Commodity Dashboard</h1>
+                <p class="text-xs text-zinc-400">Advanced Business Interruption Insurance Methodology & Modelling</p>
+            </div>
+        </div>
+        <div class="flex space-x-2">
+            <span class="px-3 py-1 bg-zinc-800 border border-zinc-700 text-xs rounded-full text-orange-400 font-medium">Interactive Companion</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Sidebar / Commodity Selector -->
+        <div class="lg:col-span-1 space-y-4">
+            <div class="bg-[#121114] border border-[#2A292E] rounded-xl p-5 shadow-xl">
+                <h2 class="text-sm font-semibold text-white uppercase tracking-wider mb-3">Select Commodity</h2>
+                <div class="space-y-2" id="commodity-buttons">
+                    <button onclick="switchCommodity('gold')" id="btn-gold" class="w-full text-left px-4 py-3 rounded-lg bg-orange-600 text-white font-medium text-sm transition shadow-md flex items-center justify-between">
+                        <span>Gold (Underground)</span>
+                        <span class="text-xs bg-black/30 px-2 py-0.5 rounded">18m IP</span>
+                    </button>
+                    <button onclick="switchCommodity('diamond')" id="btn-diamond" class="w-full text-left px-4 py-3 rounded-lg bg-[#1E1D22] hover:bg-[#2A292E] text-zinc-300 font-medium text-sm transition flex items-center justify-between border border-[#2A292E]">
+                        <span>Diamonds (Open Pit)</span>
+                        <span class="text-xs bg-black/30 px-2 py-0.5 rounded">12m IP</span>
+                    </button>
+                    <button onclick="switchCommodity('coal')" id="btn-coal" class="w-full text-left px-4 py-3 rounded-lg bg-[#1E1D22] hover:bg-[#2A292E] text-zinc-300 font-medium text-sm transition flex items-center justify-between border border-[#2A292E]">
+                        <span>Coal (Open Cast Export)</span>
+                        <span class="text-xs bg-black/30 px-2 py-0.5 rounded">18m IP</span>
+                    </button>
+                    <button onclick="switchCommodity('chrome')" id="btn-chrome" class="w-full text-left px-4 py-3 rounded-lg bg-[#1E1D22] hover:bg-[#2A292E] text-zinc-300 font-medium text-sm transition flex items-center justify-between border border-[#2A292E]">
+                        <span>Chrome (Beneficiation)</span>
+                        <span class="text-xs bg-black/30 px-2 py-0.5 rounded">12m IP</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Key Metrics Card -->
+            <div class="bg-[#121114] border border-[#2A292E] rounded-xl p-5 shadow-xl space-y-4">
+                <h3 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Financial Snapshot</h3>
+                <div>
+                    <p class="text-xs text-zinc-500">Annual Revenue</p>
+                    <p id="stat-revenue" class="text-2xl font-bold text-white">$680M</p>
+                </div>
+                <div>
+                    <p class="text-xs text-zinc-500">Standard Gross Profit</p>
+                    <p id="stat-gp" class="text-2xl font-bold text-orange-500">$652M</p>
+                </div>
+                <div>
+                    <p class="text-xs text-zinc-500">Recommended BI Sum Insured</p>
+                    <p id="stat-bisum" class="text-2xl font-bold text-emerald-400">$987.5M</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Panel -->
+        <div class="lg:col-span-3 space-y-6">
+            <!-- Overview & Description -->
+            <div class="bg-[#121114] border border-[#2A292E] rounded-xl p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 id="comm-title" class="text-xl font-bold text-white">Gold Mine (Deep-Level Underground Hard Rock)</h2>
+                    <span id="comm-badge" class="px-3 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-full text-xs font-medium">18-Month Indemnity Period</span>
+                </div>
+                <p id="comm-desc" class="text-sm text-zinc-300 leading-relaxed mb-4">
+                    Deep-level tabular underground drilling, blasting, and mechanical cleaning combined with vertical shaft hoisting to surface, SAG/ball milling, and CIL gold cyanidation adsorption.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-[#2A292E]">
+                    <div>
+                        <span class="text-xs text-zinc-500 block">Mining Method</span>
+                        <span id="meta-method" class="text-sm font-semibold text-white">Deep Underground Stoping</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-zinc-500 block">Primary Bottleneck</span>
+                        <span id="meta-bottleneck" class="text-sm font-semibold text-white">Main Rock Hoisting Winder</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-zinc-500 block">Recommended ICOW Limit</span>
+                        <span id="meta-icow" class="text-sm font-semibold text-white">$9,500,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive BI Calculator & Sensitivity Slider -->
+            <div class="bg-[#121114] border border-[#2A292E] rounded-xl p-6 shadow-xl space-y-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-md font-bold text-white">Dynamic BI Sum Insured Calculator</h3>
+                        <p class="text-xs text-zinc-400">Formula: (Annual Gross Profit × (Indemnity Period / 12)) + ICOW</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-zinc-500 block">Live Calculated Limit</span>
+                        <span id="calc-result" class="text-xl font-extrabold text-emerald-400">$987,500,000</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                    <div class="space-y-2">
+                        <label class="text-xs text-zinc-400 flex justify-between">
+                            <span>Indemnity Period (Months)</span>
+                            <span id="val-ip" class="text-white font-semibold">18 Months</span>
+                        </label>
+                        <input type="range" id="slider-ip" min="6" max="24" step="1" value="18" oninput="updateCalculation()" class="w-full accent-orange-600 bg-zinc-800 rounded-lg cursor-pointer">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs text-zinc-400 flex justify-between">
+                            <span>Market Price Volatility Adj.</span>
+                            <span id="val-vol" class="text-white font-semibold">0% (Baseline)</span>
+                        </label>
+                        <input type="range" id="slider-vol" min="-30" max="30" step="5" value="0" oninput="updateCalculation()" class="w-full accent-orange-600 bg-zinc-800 rounded-lg cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asset Criticality & MFL Scenarios Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Asset Criticality Table -->
+                <div class="bg-[#121114] border border-[#2A292E] rounded-xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-md font-bold text-white mb-3">Asset Criticality Ranking</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="border-b border-[#2A292E] text-zinc-400">
+                                    <tr>
+                                        <th class="pb-2">Critical Asset</th>
+                                        <th class="pb-2 text-center">Impact</th>
+                                        <th class="pb-2 text-right">Lead Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="asset-table-body" class="divide-y divide-[#2A292E] text-zinc-300">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario Loss Chart -->
+                <div class="bg-[#121114] border border-[#2A292E] rounded-xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-md font-bold text-white mb-3">Scenario-Based BI Loss Estimates ($M)</h3>
+                        <div class="relative h-60 w-full">
+                            <canvas id="scenarioChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#2A292E] bg-[#121114] px-6 py-4 text-center text-xs text-zinc-500">
+        MineTrans Insurance Brokers is a Juristic Representative of Donaldson Group (Pty) Ltd — FSP No. 53166 · For digital training use only.
+    </footer>
+
+    <!-- Dashboard Logic Script -->
+    <script>
+        const commodityData = {
+            gold: {
+                title: "Gold Mine (Deep-Level Underground Hard Rock)",
+                badge: "18-Month Indemnity Period",
+                desc: "Deep-level tabular underground drilling, blasting, and mechanical cleaning combined with vertical shaft hoisting to surface, SAG/ball milling, and CIL gold cyanidation adsorption.",
+                method: "Deep Underground Stoping",
+                bottleneck: "Main Rock Hoisting Winder",
+                icow: 9.5,
+                icowText: "$9,500,000",
+                revenue: 680,
+                gp: 652,
+                biSum: 987.5,
+                defaultIp: 18,
+                assets: [
+                    { name: "Main Rock Hoisting Winder", impact: "100%", lead: "12m" },
+                    { name: "Primary Underground Crusher", impact: "100%", lead: "8m" },
+                    { name: "SAG Mill (Surface Plant)", impact: "100%", lead: "14m" },
+                    { name: "Main Intake Substation", impact: "100%", lead: "6m" }
+                ],
+                scenarios: [
+                    { name: "Substation Fire", loss: 280 },
+                    { name: "Crusher Breakdown", loss: 390 },
+                    { name: "Winder Fire (MFL)", loss: 590 },
+                    { name: "Tailings Pipeline Fail", loss: 110 }
+                ]
+            },
+            diamond: {
+                title: "Diamond Mine (Open Pit Kimberlite)",
+                badge: "12-Month Indemnity Period",
+                desc: "Large-scale open-pit drill, blast, truck-and-shovel mining extracting kimberlite ore bodies processed through Dense Medium Separation (DMS) and X-Ray sorting.",
+                method: "Open Pit Truck & Shovel",
+                bottleneck: "DMS Plant & Heavy Separation",
+                icow: 10.0,
+                icowText: "$10,000,000",
+                revenue: 252,
+                gp: 233,
+                biSum: 243.0,
+                defaultIp: 12,
+                assets: [
+                    { name: "DMS Plant Module", impact: "100%", lead: "10m" },
+                    { name: "Primary Gyratory Crusher", impact: "90%", lead: "7m" },
+                    { name: "X-Ray Sorting Vault", impact: "100%", lead: "4m" },
+                    { name: "Main Haul Ramp Access", impact: "80%", lead: "3m" }
+                ],
+                scenarios: [
+                    { name: "Crusher Jam", loss: 97 },
+                    { name: "DMS Fire (MFL)", loss: 204 },
+                    { name: "Sorting Vault Security", loss: 38 },
+                    { name: "Slimes Dam Interruption", loss: 162 }
+                ]
+            },
+            coal: {
+                title: "Coal Mine (Open Cast Export Thermal)",
+                badge: "18-Month Indemnity Period",
+                desc: "Open cast dragline stripping and truck-and-shovel operations with Heavy Medium Separation washing and Rapid Load-Out (RLO) export rail terminals.",
+                method: "Open Cast Dragline",
+                bottleneck: "Rapid Load-Out (RLO) Silo",
+                icow: 25.0,
+                icowText: "$25,000,000",
+                revenue: 1100,
+                gp: 700,
+                biSum: 1075.0,
+                defaultIp: 18,
+                assets: [
+                    { name: "Rapid Load-Out Terminal", impact: "100%", lead: "9m" },
+                    { name: "Coal Wash Plant (HMS)", impact: "100%", lead: "12m" },
+                    { name: "Main Dragline Excavator", impact: "60%", lead: "15m" },
+                    { name: "Crushing & Screening", impact: "90%", lead: "6m" }
+                ],
+                scenarios: [
+                    { name: "Wash Plant Fire", loss: 525 },
+                    { name: "RLO Collapse (MFL)", loss: 410 },
+                    { name: "Dragline Boom Failure", loss: 195 },
+                    { name: "Rail Line Washout", loss: 140 }
+                ]
+            },
+            chrome: {
+                title: "Chrome Mine (Hybrid Open Pit & Underground)",
+                badge: "12-Month Indemnity Period",
+                desc: "Shallow underground room-and-pillar and open-cast bench mining extracting UG2/LG6 chromitite processed through spiral concentrators and magnetic separation.",
+                method: "Hybrid UG Room & Pillar",
+                bottleneck: "Spiral Beneficiation Plant",
+                icow: 7.0,
+                icowText: "$7,000,000",
+                revenue: 252,
+                gp: 200,
+                biSum: 207.0,
+                defaultIp: 12,
+                assets: [
+                    { name: "Spiral Beneficiation Plant", impact: "100%", lead: "8m" },
+                    { name: "Primary Ball Mill", impact: "80%", lead: "7m" },
+                    { name: "Underground Ventilation Fan", impact: "100%", lead: "4m" },
+                    { name: "Product Drying Kiln", impact: "90%", lead: "5m" }
+                ],
+                scenarios: [
+                    { name: "Ball Mill Failure", loss: 98 },
+                    { name: "Plant MCC Fire (MFL)", loss: 133 },
+                    { name: "Ventilation Fan Failure", loss: 42 },
+                    { name: "Logistics Strike / Closure", loss: 28 }
+                ]
+            }
+        };
+
+        let currentComm = 'gold';
+        let chartInstance = null;
+
+        function switchCommodity(key) {
+            currentComm = key;
+            const data = commodityData[key];
+
+            // Update button styles
+            ['gold', 'diamond', 'coal', 'chrome'].forEach(c => {
+                const btn = document.getElementById(`btn-${c}`);
+                if (c === key) {
+                    btn.className = "w-full text-left px-4 py-3 rounded-lg bg-orange-600 text-white font-medium text-sm transition shadow-md flex items-center justify-between";
+                } else {
+                    btn.className = "w-full text-left px-4 py-3 rounded-lg bg-[#1E1D22] hover:bg-[#2A292E] text-zinc-300 font-medium text-sm transition flex items-center justify-between border border-[#2A292E]";
+                }
+            });
+
+            // Update text elements
+            document.getElementById('comm-title').innerText = data.title;
+            document.getElementById('comm-badge').innerText = data.badge;
+            document.getElementById('comm-desc').innerText = data.desc;
+            document.getElementById('meta-method').innerText = data.method;
+            document.getElementById('meta-bottleneck').innerText = data.bottleneck;
+            document.getElementById('meta-icow').innerText = data.icowText;
+            document.getElementById('stat-revenue').innerText = `$${data.revenue}M`;
+            document.getElementById('stat-gp').innerText = `$${data.gp}M`;
+            document.getElementById('stat-bisum').innerText = `$${data.biSum}M`;
+
+            // Update slider default
+            document.getElementById('slider-ip').value = data.defaultIp;
+            document.getElementById('slider-vol').value = 0;
+            document.getElementById('val-vol').innerText = "0% (Baseline)";
+
+            updateCalculation();
+            populateAssets(data.assets);
+            updateChart(data.scenarios);
+        }
+
+        function updateCalculation() {
+            const data = commodityData[currentComm];
+            const ip = parseInt(document.getElementById('slider-ip').value);
+            const vol = parseInt(document.getElementById('slider-vol').value);
+
+            document.getElementById('val-ip').innerText = `${ip} Months`;
+
+            const volText = vol > 0 ? `+${vol}%` : `${vol}%`;
+            document.getElementById('val-vol').innerText = vol === 0 ? "0% (Baseline)" : `${volText} Price Adj.`;
+
+            // Adjusted Gross Profit based on market volatility
+            const adjustedGp = data.gp * (1 + (vol / 100));
+            const calculatedBi = (adjustedGp * (ip / 12)) + data.icow;
+
+            document.getElementById('calc-result').innerText = `$${calculatedBi.toFixed(1)}M`;
+            document.getElementById('stat-bisum').innerText = `$${calculatedBi.toFixed(1)}M`;
+        }
+
+        function populateAssets(assets) {
+            const tbody = document.getElementById('asset-table-body');
+            tbody.innerHTML = '';
+            assets.forEach(a => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="py-2 font-medium text-white">${a.name}</td>
+                    <td class="py-2 text-center text-orange-400 font-semibold">${a.impact}</td>
+                    <td class="py-2 text-right text-zinc-400">${a.lead}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateChart(scenarios) {
+            const ctx = document.getElementById('scenarioChart').getContext('2d');
+            const labels = scenarios.map(s => s.name);
+            const values = scenarios.map(s => s.loss);
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Estimated BI Loss ($M)',
+                        data: values,
+                        backgroundColor: '#EA580C',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#A1A1AA', font: { size: 10 } }
+                        },
+                        y: {
+                            grid: { color: '#2A292E' },
+                            ticks: { color: '#A1A1AA', font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            switchCommodity('gold');
+        };
+    </script>
+</body>
+</html>
